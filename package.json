@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Mimimal Cucumber Reference Implementation",
   "scripts": {
-    "test": "mocha --recursive"
+    "test": "mocha --recursive",
+    "sloc": "sloc lib",
+    "sloccheck": "sloc --format csv lib | grep Total | cut -f3 -d',' | ruby -e 'sloc=STDIN.read.to_i; max=500; puts \"#{sloc} SLOC\"; raise \"#{sloc}>#{max}\" if sloc>max'"
   },
   "repository": {
     "type": "git",
@@ -23,9 +25,9 @@
     "url": "https://github.com/cucumber/microcuke/issues"
   },
   "homepage": "https://github.com/cucumber/microcuke#readme",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "mocha": "^2.3.3"
+    "mocha": "^2.3.3",
+    "sloc": "^0.1.9"
   }
 }
