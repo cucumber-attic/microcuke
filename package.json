@@ -25,7 +25,9 @@
     "url": "https://github.com/cucumber/microcuke/issues"
   },
   "homepage": "https://github.com/cucumber/microcuke#readme",
-  "dependencies": {},
+  "dependencies": {
+    "gherkin": "git+https://github.com/cucumber/gherkin-javascript.git"
+  },
   "devDependencies": {
     "mocha": "^2.3.3",
     "sloc": "^0.1.9"
