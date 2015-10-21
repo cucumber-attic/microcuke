@@ -5,13 +5,13 @@ describe("Runtime", function () {
   describe("#execute", function () {
     it("returns 1 when there is a failing test case", function () {
       var failedTestCase = {
-        execute: function(eventEmitter) {
+        execute: function (eventEmitter) {
           var failedStep = {
-            result: { status: 'failed' }
-          }
+            result: {status: 'failed'}
+          };
           eventEmitter.emit('step-finished', failedStep);
         }
-      }
+      };
       var runtime = new Runtime([failedTestCase]);
       var exitStatus = runtime.execute();
       assert.equal(exitStatus, 1);
@@ -19,13 +19,13 @@ describe("Runtime", function () {
 
     it("returns 0 when all test cases are passing", function () {
       var passedTestCase = {
-        execute: function(eventEmitter) {
+        execute: function (eventEmitter) {
           var passedStep = {
-            result: { status: 'passed' }
-          }
+            result: {status: 'passed'}
+          };
           eventEmitter.emit('step-finished', passedStep);
         }
-      }
+      };
       var runtime = new Runtime([passedTestCase]);
       var exitStatus = runtime.execute();
       assert.equal(exitStatus, 0);
