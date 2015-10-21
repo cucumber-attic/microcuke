@@ -1,0 +1,31 @@
+{
+  "name": "microcuke",
+  "version": "1.0.0",
+  "description": "Mimimal Cucumber Reference Implementation",
+  "scripts": {
+    "test": "mocha --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cucumber/microcuke.git"
+  },
+  "keywords": [
+    "cucumber",
+    "gherkin",
+    "bdd",
+    "testing",
+    "tests",
+    "test"
+  ],
+  "author": "Cucumber Limited <cukes@googlegroups.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cucumber/microcuke/issues"
+  },
+  "homepage": "https://github.com/cucumber/microcuke#readme",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "mocha": "^2.3.3"
+  }
+}
