@@ -2,17 +2,11 @@ var EventEmitter = require('events').EventEmitter;
 var assert = require('assert');
 var Config = require('../../lib/cucumber/config');
 
-var stubGlueLoader = {
-  loadGlue: function () {
+var stubGlue = {
+  createTestCase: function () {
     return {
-      createTestSteps: function () {
-        return [
-          {
-            execute: function (eventEmitter) {
-              eventEmitter.emit('step-started');
-            }
-          }
-        ];
+      execute: function (eventEmitter) {
+        eventEmitter.emit('scenario-started');
       }
     };
   }
@@ -42,17 +36,17 @@ describe("Config", function () {
         "    Then this should pass\n"
       );
 
-      var testCases = config.buildTestCases(stubGlueLoader, gherkinLoader);
+      var testCases = config.buildTestCases(stubGlue, gherkinLoader);
       var eventEmitter = new EventEmitter();
 
-      var stepExecuted = false;
-      eventEmitter.on('step-started', function () {
-        stepExecuted = true;
+      var scenarioStarted = false;
+      eventEmitter.on('scenario-started', function () {
+        scenarioStarted = true;
       });
 
       testCases[0].execute(eventEmitter);
 
-      assert.ok(stepExecuted, true);
+      assert.ok(scenarioStarted, true);
     });
 
     it("builds 2 TestCase objects from Gherkin sources and Glue code", function () {
@@ -67,7 +61,7 @@ describe("Config", function () {
         "    Then this should pass\n"
       );
 
-      var testCases = config.buildTestCases(stubGlueLoader, gherkinLoader);
+      var testCases = config.buildTestCases(stubGlue, gherkinLoader);
       assert.equal(testCases.length, 2);
     });
   });
