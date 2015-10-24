@@ -35,7 +35,11 @@ describe("Glue", function () {
     });
 
     it("creates an undefined step when no stepdefs match", function () {
-      var glue = new Glue([]);
+      var glue = new Glue([{
+        createTestStep: function (pickleStep) {
+          return null;
+        }
+      }]);
       var pickle = compile("Feature: hello\n  Scenario: hello\n    Given this is defined")[0];
       var testCase = glue.createTestCase(pickle);
 
