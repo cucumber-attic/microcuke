@@ -32,5 +32,16 @@ describe("TestStep", function () {
       testStep.execute(eventEmitter);
       assert.equal(step.status, 'passed');
     });
+
+    it("passes argument values to body function", function () {
+      var arg;
+      var testStep = new TestStep(['hello'], function (_arg) {
+        arg = _arg;
+      });
+
+      var eventEmitter = new EventEmitter();
+      testStep.execute(eventEmitter);
+      assert.equal(arg, 'hello');
+    });
   });
 });

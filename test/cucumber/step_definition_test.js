@@ -1,3 +1,4 @@
+var EventEmitter = require('events').EventEmitter;
 var assert = require('assert');
 var StepDefinition = require('../../lib/cucumber/step_definition');
 
@@ -19,6 +20,18 @@ describe("StepDefinition", function () {
       var pickleStep = {text: "I have 44 cukes"};
       var testStep = stepDefinition.createTestStep(pickleStep);
       assert.ok(testStep);
+    });
+
+    it("creates a TestStep that passes captures to body function", function () {
+      var n;
+      var stepDefinition = new StepDefinition(/I have (\d+) cukes/, function (_n) {
+        n = _n;
+      });
+
+      var pickleStep = {text: "I have 44 cukes"};
+      var testStep = stepDefinition.createTestStep(pickleStep);
+      testStep.execute(new EventEmitter());
+      assert.equal(n, "44");
     });
 
     it("throws an error when the number of capture groups is different from the number of function parameters", function () {
