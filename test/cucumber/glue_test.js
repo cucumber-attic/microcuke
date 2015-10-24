@@ -52,5 +52,28 @@ describe("Glue", function () {
       testCase.execute(eventEmitter);
       assert.ok(finished);
     });
+
+    it("throws an exception when two stepdefs match", function () {
+      var glue = new Glue([
+        {
+          createTestStep: function (pickleStep) {
+            return {};
+          }
+        },
+        {
+          createTestStep: function (pickleStep) {
+            return {};
+          }
+        }
+      ]);
+      var pickle = compile("Feature: hello\n  Scenario: hello\n    Given this is defined")[0];
+      try {
+        var testCase = glue.createTestCase(pickle);
+        throw new Error("Expected error");
+      } catch (err) {
+        // TODO: Error message should have details/location about the step as well as the ambiguous step defs
+        assert.equal(err.message, "Ambiguous match");
+      }
+    });
   });
 });
