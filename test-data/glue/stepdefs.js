@@ -1,4 +1,4 @@
 /* istanbul ignore next */
-Given(/this is a stepdef/, function () {
+Given(/first step/, function () {
   throw new Error("and it fails");
 });

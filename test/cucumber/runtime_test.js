@@ -7,7 +7,7 @@ describe("Runtime", function () {
       var failedTestCase = {
         execute: function (eventEmitter) {
           var failedStep = {
-            result: {status: 'failed'}
+            status: 'failed'
           };
           eventEmitter.emit('step-finished', failedStep);
         }
