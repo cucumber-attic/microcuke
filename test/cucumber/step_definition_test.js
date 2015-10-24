@@ -18,5 +18,7 @@ describe("StepDefinition", function () {
       var testStep = stepDefinition.createTestStep(pickleStep);
       assert.ok(testStep);
     });
+
+    it("throws an error when the number of capture groups doesn't match number of function arguments");
   });
 });

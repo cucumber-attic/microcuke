@@ -1,3 +1,4 @@
+var EventEmitter = require('events').EventEmitter;
 var assert = require('assert');
 var Gherkin = require('gherkin');
 var Glue = require('../../lib/cucumber/glue');
@@ -31,6 +32,21 @@ describe("Glue", function () {
       assert(!executed);
       testCase.execute();
       assert(executed);
+    });
+
+    it("creates an undefined step when no stepdefs match", function () {
+      var glue = new Glue([]);
+      var pickle = compile("Feature: hello\n  Scenario: hello\n    Given this is defined")[0];
+      var testCase = glue.createTestCase(pickle);
+
+      var eventEmitter = new EventEmitter();
+      var finished = false;
+      eventEmitter.on('step-finished', function (step) {
+        finished = true;
+        assert.equal(step.status, 'undefined');
+      });
+      testCase.execute(eventEmitter);
+      assert.ok(finished);
     });
   });
 });
