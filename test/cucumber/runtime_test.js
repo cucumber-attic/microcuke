@@ -1,3 +1,4 @@
+var EventEmitter = require('events').EventEmitter;
 var assert = require('assert');
 var Runtime = require('../../lib/cucumber/runtime');
 
@@ -13,7 +14,7 @@ describe("Runtime", function () {
         }
       };
       var runtime = new Runtime([failedTestCase]);
-      var exitStatus = runtime.execute();
+      var exitStatus = runtime.execute(new EventEmitter());
       assert.equal(exitStatus, 1);
     });
 
@@ -26,8 +27,9 @@ describe("Runtime", function () {
           eventEmitter.emit('step-finished', passedStep);
         }
       };
+
       var runtime = new Runtime([passedTestCase]);
-      var exitStatus = runtime.execute();
+      var exitStatus = runtime.execute(new EventEmitter());
       assert.equal(exitStatus, 0);
     });
   });
