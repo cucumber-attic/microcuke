@@ -7,14 +7,35 @@ describe("TestCase", function () {
       var done = false;
       var testCase = new TestCase([
         {
-          execute: function (eventEmitter, run) {
+          execute: function (world, eventEmitter, run) {
             return true;
           }
         },
         {
-          execute: function (eventEmitter, run) {
+          execute: function (world, eventEmitter, run) {
             done = true;
             assert(run);
+          }
+        }
+      ]);
+
+      testCase.execute(null);
+      assert(done);
+    });
+
+    it("uses the same this object across steps", function () {
+      var done = false;
+      var testCase = new TestCase([
+        {
+          execute: function (world, eventEmitter, run) {
+            world.bingo = 'yes';
+            return true;
+          }
+        },
+        {
+          execute: function (world, eventEmitter, run) {
+            done = true;
+            assert.equal(world.bingo, 'yes');
           }
         }
       ]);
@@ -27,12 +48,12 @@ describe("TestCase", function () {
       var done = false;
       var testCase = new TestCase([
         {
-          execute: function (eventEmitter, run) {
+          execute: function (world, eventEmitter, run) {
             return false;
           }
         },
         {
-          execute: function (eventEmitter, run) {
+          execute: function (world, eventEmitter, run) {
             done = true;
             assert(!run);
           }

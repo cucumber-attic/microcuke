@@ -14,7 +14,8 @@ describe("TestStep", function () {
         step = _step;
       });
 
-      testStep.execute(eventEmitter);
+      var world = {};
+      testStep.execute(world, eventEmitter);
       assert.equal(step.status, 'unknown');
     });
 
@@ -29,7 +30,8 @@ describe("TestStep", function () {
         step = _step;
       });
 
-      testStep.execute(eventEmitter);
+      var world = {};
+      testStep.execute(world, eventEmitter);
       assert.equal(step.status, 'failed');
     });
 
@@ -43,7 +45,8 @@ describe("TestStep", function () {
         step = _step;
       });
 
-      testStep.execute(eventEmitter);
+      var world = {};
+      testStep.execute(world, eventEmitter);
       assert.equal(step.status, 'passed');
     });
 
@@ -54,7 +57,8 @@ describe("TestStep", function () {
       });
 
       var eventEmitter = new EventEmitter();
-      testStep.execute(eventEmitter);
+      var world = {};
+      testStep.execute(world, eventEmitter);
       assert.equal(arg, 'hello');
     });
   });
