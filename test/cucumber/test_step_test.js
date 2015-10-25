@@ -4,6 +4,20 @@ var TestStep = require('../../lib/cucumber/test_step');
 
 describe("TestStep", function () {
   describe("#execute", function () {
+    it("fires an event with status=unknown when a step is executed", function () {
+      var testStep = new TestStep([], function () {
+      });
+
+      var eventEmitter = new EventEmitter();
+      var step;
+      eventEmitter.on('step-started', function (_step) {
+        step = _step;
+      });
+
+      testStep.execute(eventEmitter);
+      assert.equal(step.status, 'unknown');
+    });
+
     it("fires an event with status=failed when an exception is thrown", function () {
       var testStep = new TestStep([], function () {
         throw new Error("sad trombone");
