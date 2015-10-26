@@ -11,7 +11,7 @@ var glueLoader = new GlueLoader();
 var pickleLoader = new PickleLoader();
 
 var glue = glueLoader.loadGlue("test-data", Glue);
-var pickles = pickleLoader.loadPickles("test-data");
+var pickles = pickleLoader.loadPickles("test-data/hello.feature");
 var testCases = pickles.map(glue.createTestCase);
 
 var runtime = new Runtime(testCases);

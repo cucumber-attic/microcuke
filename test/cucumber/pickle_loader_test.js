@@ -16,5 +16,12 @@ describe("PickleLoader", function () {
       assert.equal(pickles.length, 2);
       assert.equal(pickles[0].steps[0].text, "first step");
     });
+
+    it("filters pickles by line number", function () {
+      var pickleLoader = new PickleLoader();
+      var pickles = pickleLoader.loadPickles('test-data/hello.feature:5:55');
+      assert.equal(pickles.length, 1);
+      assert.equal(pickles[0].steps[0].text, "second step");
+    });
   });
 });
