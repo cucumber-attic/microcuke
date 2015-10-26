@@ -31,7 +31,7 @@ describe("StepDefinition", function () {
       var pickleStep = {text: "I have 44 cukes", locations: [{column: 22}]};
       var testStep = stepDefinition.createTestStep(pickleStep);
       var world = {};
-      testStep.execute(world, new EventEmitter());
+      testStep.execute(world, new EventEmitter(), true);
       assert.equal(n, "44");
     });
 

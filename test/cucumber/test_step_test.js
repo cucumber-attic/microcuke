@@ -4,7 +4,7 @@ var TestStep = require('../../lib/cucumber/test_step');
 
 describe("TestStep", function () {
   describe("#execute", function () {
-    it("fires an event with status=unknown when a step is executed", function () {
+    it("fires an event with status=unknown before a step is executed", function () {
       var locations = [];
       var testStep = new TestStep(locations, [], function () {
       });
@@ -16,7 +16,7 @@ describe("TestStep", function () {
       });
 
       var world = {};
-      testStep.execute(world, eventEmitter);
+      testStep.execute(world, eventEmitter, true);
       assert.equal(step.status, 'unknown');
     });
 
@@ -33,9 +33,28 @@ describe("TestStep", function () {
       });
 
       var world = {};
-      testStep.execute(world, eventEmitter);
+      var run = testStep.execute(world, eventEmitter, true);
+      assert(!run);
       assert.equal(step.status, 'failed');
     });
+
+    it("fires an event with status=skipped when the run parameter is false", function () {
+      var locations = [];
+      var testStep = new TestStep(locations, [], function () {
+        throw new Error("sad trombone");
+      });
+
+      var eventEmitter = new EventEmitter();
+      var step;
+      eventEmitter.on('step-finished', function (_step) {
+        step = _step;
+      });
+
+      var world = {};
+      testStep.execute(world, eventEmitter, false);
+      assert.equal(step.status, 'skipped');
+    });
+
 
     it("fires an event with status=passed when no exception is thrown", function () {
       var locations = [];
@@ -49,8 +68,9 @@ describe("TestStep", function () {
       });
 
       var world = {};
-      testStep.execute(world, eventEmitter);
-      assert.equal(step.status, 'passed');
+      var run = testStep.execute(world, eventEmitter, true);
+      assert(run);
+      assert.equal(step.status, 'passed', true);
     });
 
     it("passes argument values to body function", function () {
@@ -64,7 +84,7 @@ describe("TestStep", function () {
 
       var eventEmitter = new EventEmitter();
       var world = {};
-      testStep.execute(world, eventEmitter);
+      testStep.execute(world, eventEmitter, true);
       assert.equal(arg, 'hello');
     });
   });
