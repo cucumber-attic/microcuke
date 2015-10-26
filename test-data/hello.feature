@@ -4,3 +4,4 @@ Feature: Hello
 
   Scenario: second
     Given second step
+    Given first step

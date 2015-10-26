@@ -73,6 +73,22 @@ describe("TestStep", function () {
       assert.equal(step.status, 'passed', true);
     });
 
+    it("fires an event with status=undefined when no body exists", function () {
+      var locations = [];
+      var testStep = new TestStep(locations, [], null);
+
+      var eventEmitter = new EventEmitter();
+      var step;
+      eventEmitter.on('step-finished', function (_step) {
+        step = _step;
+      });
+
+      var world = {};
+      var run = testStep.execute(world, eventEmitter, true);
+      assert(!run);
+      assert.equal(step.status, 'undefined', true);
+    });
+
     it("passes argument values to body function", function () {
       var arg;
 
