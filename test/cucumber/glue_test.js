@@ -30,7 +30,7 @@ describe("Glue", function () {
       var testCase = glue.createTestCase(pickle);
 
       assert(!executed);
-      testCase.execute();
+      testCase.execute(new EventEmitter());
       assert(executed);
     });
 

@@ -17,7 +17,7 @@ describe("StepDefinition", function () {
       var stepDefinition = new StepDefinition(/I have (\d+) cukes/, function (n) {
       });
 
-      var pickleStep = {text: "I have 44 cukes"};
+      var pickleStep = {text: "I have 44 cukes", locations: [{column: 22}]};
       var testStep = stepDefinition.createTestStep(pickleStep);
       assert.ok(testStep);
     });
@@ -28,7 +28,7 @@ describe("StepDefinition", function () {
         n = _n;
       });
 
-      var pickleStep = {text: "I have 44 cukes"};
+      var pickleStep = {text: "I have 44 cukes", locations: [{column: 22}]};
       var testStep = stepDefinition.createTestStep(pickleStep);
       var world = {};
       testStep.execute(world, new EventEmitter());
