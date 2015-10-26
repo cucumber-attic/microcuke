@@ -48,6 +48,7 @@ describe("Glue", function () {
       eventEmitter.on('step-finished', function (step) {
         finished = true;
         assert.equal(step.status, 'undefined');
+        assert.deepEqual(step.location, {line: 3, column: 11});
       });
       testCase.execute(eventEmitter);
       assert.ok(finished);
@@ -68,7 +69,7 @@ describe("Glue", function () {
       ]);
       var pickle = compile("Feature: hello\n  Scenario: hello\n    Given this is defined")[0];
       try {
-        var testCase = glue.createTestCase(pickle);
+        glue.createTestCase(pickle);
         throw new Error("Expected error");
       } catch (err) {
         // TODO: Error message should have details/location about the step as well as the ambiguous step defs
