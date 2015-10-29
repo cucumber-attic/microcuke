@@ -6,9 +6,12 @@ var PickleLoader = require('../lib/cucumber/pickle_loader');
 var Runtime = require('../lib/cucumber/runtime');
 var PrettyPlugin = require('../lib/cucumber/pretty_plugin');
 var SourceReader = require('../lib/cucumber/source_reader');
+var tagFilter = require('../lib/cucumber/tag_filter');
 
 var glueLoader = new GlueLoader();
-var pickleLoader = new PickleLoader();
+
+var filter = process.env.TAGS ? tagFilter(process.env.TAGS) : function () {return true;};
+var pickleLoader = new PickleLoader(filter);
 
 var glue = glueLoader.loadGlue("test-data", Glue);
 var pickles = pickleLoader.loadPickles("test-data/hello.feature");
