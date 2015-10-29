@@ -16,3 +16,13 @@ See how big it is:
 Make sure it's not too big:
 
     npm run sloccheck
+
+## TODO
+
+* Hooks (should just be API sugar for events)
+* Progress formatter
+* Summary reporter: all errors and count summary. (skip all errors if using pretty formatter to same stream)
+* Pretty formatter (improve so it doesn't print filtered away stuff)
+* Compact size
+  * Remove toString from bool nodes
+  *
