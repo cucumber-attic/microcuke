@@ -25,4 +25,4 @@ Make sure it's not too big:
 * Pretty formatter (improve so it doesn't print filtered away stuff)
 * Compact size
   * Remove toString from bool nodes
-  *
+* Add Markdown support in Gherkin3 and in pretty formatter
