@@ -1,5 +1,6 @@
 var assert = require('assert');
 var PickleLoader = require('../../lib/cucumber/pickle_loader');
+var tagFilter = require('../../lib/cucumber/tag_filter');
 
 function passthrough(pickle) {
   return true;
@@ -23,17 +24,15 @@ describe("PickleLoader", function () {
 
     it("filters pickles by line number", function () {
       var pickleLoader = new PickleLoader(passthrough);
-      var pickles = pickleLoader.loadPickles('test-data/hello.feature:99:5');
+      var pickles = pickleLoader.loadPickles('test-data/hello.feature:6');
       assert.equal(pickles.length, 1);
       assert.equal(pickles[0].steps[0].text, "second step");
     });
 
-    it("accepts additional filters", function () {
-      function otherFilter(pickle) {
-        return pickle.steps[0].text == 'second step';
-      }
+    it("filters pickles by tag expressions", function () {
+      var filter = tagFilter("not @wip");
 
-      var pickleLoader = new PickleLoader(otherFilter);
+      var pickleLoader = new PickleLoader(filter);
       var pickles = pickleLoader.loadPickles('test-data/hello.feature');
       assert.equal(pickles.length, 1);
       assert.equal(pickles[0].steps[0].text, "second step");
