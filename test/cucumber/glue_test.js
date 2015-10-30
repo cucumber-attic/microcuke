@@ -25,7 +25,7 @@ describe("Glue", function () {
           }
         }
       ];
-      var glue = new Glue(stepDefinitions);
+      var glue = new Glue(stepDefinitions, []);
       var pickle = compile("Feature: hello\n  Scenario: hello\n    Given this is defined")[0];
       var testCase = glue.createTestCase(pickle);
 
@@ -35,11 +35,12 @@ describe("Glue", function () {
     });
 
     it("creates an undefined step when no stepdefs match", function () {
-      var glue = new Glue([{
+      var stepDefinitions = [{
         createTestStep: function (pickleStep) {
           return null;
         }
-      }]);
+      }];
+      var glue = new Glue(stepDefinitions, []);
       var pickle = compile("Feature: hello\n  Scenario: hello\n    Given this is defined")[0];
       var testCase = glue.createTestCase(pickle);
 
@@ -55,7 +56,7 @@ describe("Glue", function () {
     });
 
     it("throws an exception when two stepdefs match", function () {
-      var glue = new Glue([
+      var stepDefinitions = [
         {
           createTestStep: function (pickleStep) {
             return {};
@@ -66,7 +67,8 @@ describe("Glue", function () {
             return {};
           }
         }
-      ]);
+      ];
+      var glue = new Glue(stepDefinitions, []);
       var pickle = compile("Feature: hello\n  Scenario: hello\n    Given this is defined")[0];
       try {
         glue.createTestCase(pickle);
@@ -75,6 +77,40 @@ describe("Glue", function () {
         // TODO: Error message should have details/location about the step as well as the ambiguous step defs
         assert.equal(err.message, "Ambiguous match");
       }
+    });
+
+    it("creates test cases with hooks", function () {
+      var stepDefinitions = [
+        {
+          createTestStep: function (pickleStep) {
+            return {
+              execute: function () {
+              }
+            };
+          }
+        }
+      ];
+
+      var executed = false;
+      var hooks = [
+        {
+          scope: 'before',
+          createTestStep: function (pickle) {
+            return {
+              execute: function () {
+                executed = true;
+              }
+            };
+          }
+        }
+      ];
+      var glue = new Glue(stepDefinitions, hooks);
+      var pickle = compile("Feature: hello\n  Scenario: hello\n    Given this is defined")[0];
+      var testCase = glue.createTestCase(pickle);
+
+      assert(!executed);
+      testCase.execute(new EventEmitter());
+      assert(executed);
     });
   });
 });

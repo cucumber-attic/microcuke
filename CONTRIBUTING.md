@@ -26,3 +26,4 @@ Make sure it's not too big:
 * Compact size
   * Remove toString from bool nodes
 * Add Markdown support in Gherkin3 and in pretty formatter
+* i18n stepdef API
