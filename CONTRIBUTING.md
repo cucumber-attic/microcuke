@@ -20,6 +20,7 @@ Make sure it's not too big:
 ## TODO
 
 * Hooks (should just be API sugar for events)
+* Tagged hooks
 * Progress formatter
 * Summary reporter: all errors and count summary. (skip all errors if using pretty formatter to same stream)
 * Pretty formatter (improve so it doesn't print filtered away stuff)
