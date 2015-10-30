@@ -30,10 +30,13 @@ describe("GlueLoader", function () {
       assert.equal(stubGlue.stepDefinitions.length, 1);
     });
 
-    it("loads before hooks", function () {
+    it("loads hooks", function () {
       var glueLoader = new GlueLoader();
       var stubGlue = glueLoader.loadGlue(testDataDir, StubGlue);
-      assert.equal(stubGlue.hooks.length, 1);
+      var hookScopes = stubGlue.hooks.map(function (hook) {
+        return hook.scope
+      });
+      assert.deepEqual(hookScopes, ['before', 'after']);
     });
   });
 });
