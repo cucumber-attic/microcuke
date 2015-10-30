@@ -19,14 +19,15 @@ describe("GlueLoader", function () {
       });
     });
 
+    afterEach(function () {
+      // Verify that we clean up temporary polution of global namespace
+      assert.equal(global.Given, undefined);
+    });
+
     it("loads step definitions", function () {
       var glueLoader = new GlueLoader();
       var stubGlue = glueLoader.loadGlue(testDataDir, StubGlue);
       assert.equal(stubGlue.stepDefinitions.length, 1);
-    });
-
-    it("cleans up temporary polution of global namespace", function () {
-      assert.equal(global.Given, undefined);
     });
 
     it("loads before hooks", function () {
