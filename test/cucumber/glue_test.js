@@ -80,25 +80,36 @@ describe("Glue", function () {
     });
 
     it("creates test cases with hooks", function () {
+      var result = [];
       var stepDefinitions = [
         {
           createTestStep: function (pickleStep) {
             return {
               execute: function () {
+                result.push('step')
               }
             };
           }
         }
       ];
 
-      var executed = false;
       var hooks = [
         {
           scope: 'before',
           createTestStep: function (pickle) {
             return {
               execute: function () {
-                executed = true;
+                result.push('before')
+              }
+            };
+          }
+        },
+        {
+          scope: 'after',
+          createTestStep: function (pickle) {
+            return {
+              execute: function () {
+                result.push('after')
               }
             };
           }
@@ -108,9 +119,9 @@ describe("Glue", function () {
       var pickle = compile("Feature: hello\n  Scenario: hello\n    Given this is defined")[0];
       var testCase = glue.createTestCase(pickle);
 
-      assert(!executed);
+      assert.deepEqual(result, []);
       testCase.execute(new EventEmitter());
-      assert(executed);
+      assert.deepEqual(result, ['before', 'step', 'after']);
     });
   });
 });
