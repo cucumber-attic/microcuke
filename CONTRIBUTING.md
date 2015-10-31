@@ -19,6 +19,7 @@ Make sure it's not too big:
 
 ## TODO
 
+* Support promises
 * Hooks (should just be API sugar for events)
 * Tagged hooks
 * Progress formatter

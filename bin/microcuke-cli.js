@@ -13,8 +13,8 @@ var glueLoader = new GlueLoader();
 var filter = process.env.TAGS ? tagFilter(process.env.TAGS) : function () {return true;};
 var pickleLoader = new PickleLoader(filter);
 
-var glue = glueLoader.loadGlue("test-data", Glue);
-var pickles = pickleLoader.loadPickles("test-data/hello.feature");
+var glue = glueLoader.loadGlue("features", Glue);
+var pickles = pickleLoader.loadPickles("features");
 var testCases = pickles.map(glue.createTestCase);
 
 var runtime = new Runtime(testCases);
