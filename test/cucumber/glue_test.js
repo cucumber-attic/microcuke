@@ -51,8 +51,10 @@ describe("Glue", function () {
         assert.equal(step.status, 'undefined');
         assert.deepEqual(step.location, {line: 3, column: 11});
       });
-      testCase.execute(eventEmitter);
-      assert.ok(finished);
+      return testCase.execute(eventEmitter)
+        .then(function () {
+          assert.ok(finished);
+        });
     });
 
     it("throws an exception when two stepdefs match", function () {

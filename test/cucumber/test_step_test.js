@@ -33,9 +33,11 @@ describe("TestStep", function () {
       });
 
       var world = {};
-      var run = testStep.execute(world, eventEmitter, true);
-      assert(!run);
-      assert.equal(step.status, 'failed');
+      return testStep.execute(world, eventEmitter, true)
+        .then(function (run) {
+          assert(!run);
+          assert.equal(step.status, 'failed');
+        });
     });
 
     it("fires an event with status=skipped when the run parameter is false", function () {
@@ -51,8 +53,11 @@ describe("TestStep", function () {
       });
 
       var world = {};
-      testStep.execute(world, eventEmitter, false);
-      assert.equal(step.status, 'skipped');
+      return testStep.execute(world, eventEmitter, false)
+        .then(function (run) {
+          assert(!run);
+          assert.equal(step.status, 'skipped');
+        });
     });
 
 
@@ -68,9 +73,11 @@ describe("TestStep", function () {
       });
 
       var world = {};
-      var run = testStep.execute(world, eventEmitter, true);
-      assert(run);
-      assert.equal(step.status, 'passed', true);
+      return testStep.execute(world, eventEmitter, true)
+        .then(function (run) {
+          assert(run);
+          assert.equal(step.status, 'passed');
+        });
     });
 
     it("fires an event with status=undefined when no body exists", function () {
@@ -84,9 +91,11 @@ describe("TestStep", function () {
       });
 
       var world = {};
-      var run = testStep.execute(world, eventEmitter, true);
-      assert(!run);
-      assert.equal(step.status, 'undefined', true);
+      return testStep.execute(world, eventEmitter, true)
+        .then(function (run) {
+          assert(!run);
+          assert.equal(step.status, 'undefined', true);
+        });
     });
 
     it("passes argument values to body function", function () {
@@ -100,8 +109,10 @@ describe("TestStep", function () {
 
       var eventEmitter = new EventEmitter();
       var world = {};
-      testStep.execute(world, eventEmitter, true);
-      assert.equal(arg, 'hello');
+      return testStep.execute(world, eventEmitter, true)
+        .then(function (run) {
+          assert.equal(arg, 'hello');
+        });
     });
   });
 });
