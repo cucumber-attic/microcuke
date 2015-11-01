@@ -31,8 +31,9 @@ describe("Glue", function () {
       var testCase = glue.createTestCase(pickle);
 
       assert(!executed);
-      testCase.execute(new EventEmitter());
-      assert(executed);
+      return testCase.execute(new EventEmitter()).then(function () {
+        assert(executed);
+      });
     });
 
     it("creates an undefined step when no stepdefs match", function () {
