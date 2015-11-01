@@ -23,5 +23,8 @@ var eventEmitter = new EventEmitter();
 var plugin = new PrettyPlugin(process.stdout, new SourceReader());
 plugin.subscribe(eventEmitter);
 
-process.exit(runtime.execute(eventEmitter));
+runtime.execute(eventEmitter)
+  .then(function (exitStatus) {
+    process.exit(exitStatus);
+  });
 

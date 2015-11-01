@@ -13,19 +13,22 @@ describe("TestCase", function () {
       var testCase = new TestCase(pickle, [
         {
           execute: function (world, eventEmitter, run) {
-            return true;
+            return Promise.resolve(true);
           }
         },
         {
           execute: function (world, eventEmitter, run) {
             done = true;
             assert(run);
+            return Promise.resolve(true);
           }
         }
       ]);
 
-      testCase.execute(new EventEmitter());
-      assert(done);
+      return testCase.execute(new EventEmitter())
+        .then(function () {
+          assert(done);
+        });
     });
 
     it("uses the same this object across steps", function () {
@@ -38,19 +41,22 @@ describe("TestCase", function () {
         {
           execute: function (world, eventEmitter, run) {
             world.bingo = 'yes';
-            return true;
+            return Promise.resolve(true);
           }
         },
         {
           execute: function (world, eventEmitter, run) {
             done = true;
             assert.equal(world.bingo, 'yes');
+            return Promise.resolve(true);
           }
         }
       ]);
 
-      testCase.execute(new EventEmitter());
-      assert(done);
+      return testCase.execute(new EventEmitter())
+        .then(function () {
+          assert(done);
+        });
     });
 
     it("tells next step to not run when previous one failed", function () {
@@ -62,19 +68,22 @@ describe("TestCase", function () {
       var testCase = new TestCase(pickle, [
         {
           execute: function (world, eventEmitter, run) {
-            return false;
+            return Promise.resolve(false);
           }
         },
         {
           execute: function (world, eventEmitter, run) {
             done = true;
             assert(!run);
+            return Promise.resolve(false);
           }
         }
       ]);
 
-      testCase.execute(new EventEmitter());
-      assert(done);
+      return testCase.execute(new EventEmitter())
+        .then(function () {
+          assert(done);
+        });
     });
   });
 });

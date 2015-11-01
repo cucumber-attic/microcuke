@@ -11,11 +11,14 @@ describe("Runtime", function () {
             status: 'failed'
           };
           eventEmitter.emit('step-finished', failedStep);
+          return Promise.resolve();
         }
       };
       var runtime = new Runtime([failedTestCase]);
-      var exitStatus = runtime.execute(new EventEmitter());
-      assert.equal(exitStatus, 1);
+      return runtime.execute(new EventEmitter())
+        .then(function (exitStatus) {
+          assert.equal(exitStatus, 1);
+        });
     });
 
     it("returns 0 when all test cases are passing", function () {
@@ -25,12 +28,15 @@ describe("Runtime", function () {
             result: {status: 'passed'}
           };
           eventEmitter.emit('step-finished', passedStep);
+          return Promise.resolve();
         }
       };
 
       var runtime = new Runtime([passedTestCase]);
-      var exitStatus = runtime.execute(new EventEmitter());
-      assert.equal(exitStatus, 0);
+      return runtime.execute(new EventEmitter())
+        .then(function (exitStatus) {
+          assert.equal(exitStatus, 0);
+        });
     });
   });
 });

@@ -20,6 +20,26 @@ describe("TestStep", function () {
       assert.equal(step.status, 'unknown');
     });
 
+    it("fires an event with status=failed when returning a rejected promise", function () {
+      var locations = [];
+      var testStep = new TestStep(locations, [], function () {
+        return Promise.reject(Error("sad trombone"));
+      });
+
+      var eventEmitter = new EventEmitter();
+      var step;
+      eventEmitter.on('step-finished', function (_step) {
+        step = _step;
+      });
+
+      var world = {};
+      return testStep.execute(world, eventEmitter, true)
+        .then(function (run) {
+          assert(!run);
+          assert.equal(step.status, 'failed');
+        });
+    });
+
     it("fires an event with status=failed when an exception is thrown", function () {
       var locations = [];
       var testStep = new TestStep(locations, [], function () {
@@ -60,10 +80,29 @@ describe("TestStep", function () {
         });
     });
 
-
     it("fires an event with status=passed when no exception is thrown", function () {
       var locations = [];
       var testStep = new TestStep(locations, [], function () {
+      });
+
+      var eventEmitter = new EventEmitter();
+      var step;
+      eventEmitter.on('step-finished', function (_step) {
+        step = _step;
+      });
+
+      var world = {};
+      return testStep.execute(world, eventEmitter, true)
+        .then(function (run) {
+          assert(run);
+          assert.equal(step.status, 'passed');
+        });
+    });
+
+    it("fires an event with status=passed when returning a resolved promise", function () {
+      var locations = [];
+      var testStep = new TestStep(locations, [], function () {
+        return Promise.resolve();
       });
 
       var eventEmitter = new EventEmitter();

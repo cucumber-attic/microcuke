@@ -20,6 +20,7 @@ describe("Glue", function () {
             return {
               execute: function () {
                 executed = true;
+                return Promise.resolve();
               }
             };
           }
@@ -88,7 +89,8 @@ describe("Glue", function () {
           createTestStep: function (pickleStep) {
             return {
               execute: function () {
-                result.push('step')
+                result.push('step');
+                return Promise.resolve();
               }
             };
           }
@@ -102,6 +104,7 @@ describe("Glue", function () {
             return {
               execute: function () {
                 result.push('before')
+                return Promise.resolve();
               }
             };
           }
@@ -112,6 +115,7 @@ describe("Glue", function () {
             return {
               execute: function () {
                 result.push('after')
+                return Promise.resolve();
               }
             };
           }
@@ -122,8 +126,9 @@ describe("Glue", function () {
       var testCase = glue.createTestCase(pickle);
 
       assert.deepEqual(result, []);
-      testCase.execute(new EventEmitter());
-      assert.deepEqual(result, ['before', 'step', 'after']);
+      return testCase.execute(new EventEmitter()).then(function () {
+        assert.deepEqual(result, ['before', 'step', 'after']);
+      });
     });
   });
 });
