@@ -14,11 +14,11 @@ describe("TagExpressionParser", function () {
       // a or not b
     ].forEach(function (inOut) {
         it(inOut[0], function () {
-          var tokens = inOut[0].split(' ');
-          var expr = parser.parse(tokens);
+          var infix = inOut[0];
+          var expr = parser.parse(infix);
           assert.equal(expr.toString(), inOut[1]);
 
-          var roundtripTokens = expr.toString().split(' ');
+          var roundtripTokens = expr.toString();
           var roundtripExpr = parser.parse(roundtripTokens);
           assert.equal(roundtripExpr.toString(), inOut[1]);
         });
@@ -27,20 +27,20 @@ describe("TagExpressionParser", function () {
     // evaluation
 
     it("evaluates not", function () {
-      var expr = parser.parse("not x".split(' '));
+      var expr = parser.parse("not   x");
       assert.equal(expr.evaluate(['x']), false);
       assert.equal(expr.evaluate(['y']), true);
     });
 
     it("evaluates and", function () {
-      var expr = parser.parse("x and y".split(' '));
+      var expr = parser.parse("x and y");
       assert.equal(expr.evaluate(['x', 'y']), true);
       assert.equal(expr.evaluate(['y']), false);
       assert.equal(expr.evaluate(['x']), false);
     });
 
     it("evaluates or", function () {
-      var expr = parser.parse("x or y".split(' '));
+      var expr = parser.parse("  x or(y) ");
       assert.equal(expr.evaluate([]), false);
       assert.equal(expr.evaluate(['y']), true);
       assert.equal(expr.evaluate(['x']), true);
@@ -49,9 +49,8 @@ describe("TagExpressionParser", function () {
     // errors
 
     it("errors on extra close paren", function () {
-      var tokens = '( a and b ) )'.split(' ');
       try {
-        parser.parse(tokens);
+        parser.parse("( a and b ) )");
         throw new Error("expected error")
       } catch (expected) {
         assert.equal(expected.message, "Unclosed (")
@@ -59,9 +58,8 @@ describe("TagExpressionParser", function () {
     });
 
     it("errors on extra close paren", function () {
-      var tokens = 'a not ( and )'.split(' ');
       try {
-        parser.parse(tokens);
+        parser.parse("a not ( and )");
         throw new Error("expected error")
       } catch (expected) {
         assert.equal(expected.message, "empty stack")
@@ -69,9 +67,8 @@ describe("TagExpressionParser", function () {
     });
 
     it("errors on unclosed paren", function () {
-      var tokens = '( ( a and b )'.split(' ');
       try {
-        parser.parse(tokens);
+        parser.parse("( ( a and b )");
         throw new Error("expected error")
       } catch (expected) {
         assert.equal(expected.message, "Unclosed (")
@@ -79,10 +76,8 @@ describe("TagExpressionParser", function () {
     });
 
     it("errors when there are several expressions", function () {
-      var tokens = 'a b'.split(' ');
       try {
-        var expr = parser.parse(tokens);
-        console.log(expr.toString());
+        var expr = parser.parse("a b");
         throw new Error("expected error")
       } catch (expected) {
         assert.equal(expected.message, "Not empty")
