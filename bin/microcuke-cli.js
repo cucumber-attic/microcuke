@@ -8,17 +8,20 @@ var PrettyPlugin = require('../lib/cucumber/pretty_plugin');
 var SourceReader = require('../lib/cucumber/source_reader');
 var tagFilter = require('../lib/cucumber/tag_filter');
 
-var glueLoader = new GlueLoader();
+var argv = require('minimist')(process.argv.slice(2));
+var featurePath = argv._[0] || 'features';
+var gluePath = argv.glue || 'features'; // TODO: Derive from featurePath
 
-var filter = process.env.TAGS ? tagFilter(process.env.TAGS) : function () {
+var glueLoader = new GlueLoader();
+var glue = glueLoader.loadGlue(gluePath, function (stepDefinitions, hooks) {
+  return new Glue(stepDefinitions, hooks);
+});
+
+var filter = argv.tags ? tagFilter(argv.tags) : function () {
   return true;
 };
 var pickleLoader = new PickleLoader(filter);
-
-var glue = glueLoader.loadGlue("features", function(stepDefinitions, hooks) {
-  return new Glue(stepDefinitions, hooks);
-});
-var pickles = pickleLoader.loadPickles("features");
+var pickles = pickleLoader.loadPickles(featurePath);
 var testCases = pickles.map(glue.createTestCase);
 
 var executor = new SequentialTestCaseExecutor(testCases);
