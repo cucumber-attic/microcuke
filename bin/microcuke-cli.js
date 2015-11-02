@@ -15,7 +15,9 @@ var filter = process.env.TAGS ? tagFilter(process.env.TAGS) : function () {
 };
 var pickleLoader = new PickleLoader(filter);
 
-var glue = glueLoader.loadGlue("features", Glue);
+var glue = glueLoader.loadGlue("features", function(stepDefinitions, hooks) {
+  return new Glue(stepDefinitions, hooks);
+});
 var pickles = pickleLoader.loadPickles("features");
 var testCases = pickles.map(glue.createTestCase);
 
