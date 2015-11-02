@@ -13,7 +13,10 @@ describe('PrettyPlugin', function () {
       // override the readSource method
       readSource: function (path) {
         return "" +
-          "Doesn't matter\n" +
+          "Feature: don't print this\n" +
+          "  or this\n" +
+          "\n" +
+          "  Scenario: hello\n" +
           "\n" +
           "    Given I have 42 cukes\n";
       }
@@ -24,12 +27,12 @@ describe('PrettyPlugin', function () {
 
     scenario = {
       path: 'features/cukes.feature',
-      location: {line: 1, column: 1}
+      location: {line: 4, column: 1}
     };
 
     step = {
       status: 'unknown',
-      location: {line: 3, column: 11},
+      location: {line: 6, column: 11},
       matchedArguments: [
         {offset: 18, value: "42"}
       ]
@@ -46,7 +49,7 @@ describe('PrettyPlugin', function () {
     eventEmitter.emit('step-finished', step);
 
     var color = chalk.green;
-    var expected = "Doesn't matter\n\n" +
+    var expected = "  Scenario: hello\n\n" +
       color('    Given I have ') +
       color.bold('42') +
       color(' cukes') + "\n";
@@ -64,9 +67,10 @@ describe('PrettyPlugin', function () {
     eventEmitter.emit('step-finished', step);
 
     var color = chalk.red;
-    var expected = "Doesn't matter\n\n" +
+    var expected = "  Scenario: hello\n\n" +
       color('    Given I have ') + color.bold('42') + color(' cukes') + "\n" +
       color('      Error: oops') + "\n";
+    //console.log(stdout.toString());
     assert.equal(stdout.toString(), expected);
   });
 });
