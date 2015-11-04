@@ -6,7 +6,7 @@ var Glue = require('../../lib/cucumber/glue');
 function compile(gherkin) {
   var parser = new Gherkin.Parser();
   var compiler = new Gherkin.Compiler();
-  return compiler.compile(parser.parse(gherkin));
+  return compiler.compile(parser.parse(gherkin), 'features/hello.feature');
 }
 
 describe("Glue", function () {
@@ -51,7 +51,7 @@ describe("Glue", function () {
       eventEmitter.on('step-finished', function (step) {
         finished = true;
         assert.equal(step.status, 'undefined');
-        assert.deepEqual(step.location, {line: 3, column: 11});
+        assert.deepEqual(step.location, {path: 'features/hello.feature', line: 3, column: 11});
       });
       return testCase.execute(eventEmitter)
         .then(function () {
@@ -115,7 +115,7 @@ describe("Glue", function () {
           createTestStep: function (pickle) {
             return {
               execute: function () {
-                result.push('after')
+                result.push('after');
                 return Promise.resolve();
               }
             };

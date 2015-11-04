@@ -32,7 +32,7 @@ describe('PrettyPlugin', function () {
 
     step = {
       status: 'unknown',
-      location: {line: 6, column: 11},
+      location: {path: 'features/glue/glue.js', line: 6, column: 11},
       matchedArguments: [
         {offset: 18, value: "42"}
       ]
@@ -50,10 +50,8 @@ describe('PrettyPlugin', function () {
 
     var color = chalk.green;
     var expected = "  Scenario: hello\n\n" +
-      color('    Given I have ') +
-      color.bold('42') +
-      color(' cukes') + "\n";
-    assert.equal(stdout.toString(), expected);
+      color('    Given I have ') + color.bold('42') + color(' cukes') + ' ' + chalk.gray("# features/glue/glue.js:6") + "\n";
+    assert.deepEqual(stdout.toString(), expected);
   });
 
   it("prints failing step as red", function () {
@@ -68,9 +66,8 @@ describe('PrettyPlugin', function () {
 
     var color = chalk.red;
     var expected = "  Scenario: hello\n\n" +
-      color('    Given I have ') + color.bold('42') + color(' cukes') + "\n" +
+      color('    Given I have ') + color.bold('42') + color(' cukes') + " " + chalk.gray("# features/glue/glue.js:6") + "\n" +
       color('      Error: oops') + "\n";
-    //console.log(stdout.toString());
     assert.equal(stdout.toString(), expected);
   });
 });

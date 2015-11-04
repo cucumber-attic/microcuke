@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Mimimal Cucumber Reference Implementation",
   "scripts": {
-    "test": "istanbul cover _mocha -- --recursive",
+    "test": "ISTANBUL=true istanbul cover _mocha -- --recursive",
     "posttest": "istanbul check-coverage --statements 100 --branches 92",
     "test-fast": "mocha --recursive",
     "sloc": "sloc lib",
