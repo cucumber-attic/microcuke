@@ -38,5 +38,9 @@ eventEmitter.on('step-finished', function (step) {
 executor.execute(eventEmitter)
   .then(function () {
     process.exit(exitStatus);
+  })
+  .catch(function(err) {
+    console.err(err.stack);
+    process.exit(1);
   });
 
