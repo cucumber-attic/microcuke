@@ -1,9 +1,10 @@
 # Microcuke
 
-Microcuke is a tiny Cucumber implementation in 500 SLOC.
+Microcuke is a tiny Cucumber implementation in 500 SLOC, based on
+[Gherkin3](https://github.com/cucumber/gherkin3). It's got 100% unit test coverage.
 
 The sole purpose of microcuke is to provide a very simple reference implementation that
-can be ported to a new programming language in a day or two. Think of it as an aid to
+can be ported to a new programming language in a few days. Think of it as an aid to
 developers who wish to implement Cucumber for a new programming language.
 
 Microcuke is written in classic JavaScript (ES5), because that's a language most
