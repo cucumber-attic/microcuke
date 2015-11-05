@@ -23,6 +23,13 @@
   ],
   "author": "Cucumber Limited <cukes@googlegroups.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cucumber/microcuke.git"
+  },
+  "bin": {
+    "cucumber": "./bin/cucumber"
+  },
   "bugs": {
     "url": "https://github.com/cucumber/microcuke/issues"
   },

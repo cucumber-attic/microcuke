@@ -27,13 +27,14 @@ Make sure it's not too big:
 * [x] Support promises
 * [ ] Support callbacks
 * [ ] Support DocStrings and DataTables
-* [ ] Hooks (should just be API sugar for events)
+* [x] Hooks
+* [ ] Make After Hooks run even if there is a failing pickle step
 * [ ] Tagged hooks
 * [ ] Progress formatter
 * [ ] Summary reporter: all errors and count summary. (skip all errors if using pretty formatter to same stream)
 * [ ] Pretty formatter (improve so it doesn't print filtered away stuff)
-* [ ] Compact size
-  * Remove toString from bool nodes
+* [ ] Reduce size
+* [ ] Remove toString from bool nodes
 * [ ] Add Markdown support in Gherkin3 and in pretty formatter
 * [ ] i18n stepdef API
 
