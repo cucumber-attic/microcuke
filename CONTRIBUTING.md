@@ -19,8 +19,8 @@ Make sure it's not too big:
 
 ## Design philosophy
 
-* Single public method per class - makes it easier to translate to functional languages. Also good OO desing.
-* Losely coupled. Most classes require 0 or 1 other classes. None require more than 2. Supports open-closed principle.
+* Single public method per class - makes it easier to translate to functional languages. Also good OO design (single responsibility).
+* Loosely coupled. Most classes only require 0 or 1 other classes. None require more than 2.
 
 ## TODO
 
