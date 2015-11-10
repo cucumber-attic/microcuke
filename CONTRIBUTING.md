@@ -27,6 +27,7 @@ Make sure it's not too big:
 * [x] Support promises
 * [ ] Support callbacks
 * [ ] Support DocStrings and DataTables
+* [ ] Add feature source to exception backtrace
 * [x] Hooks
 * [ ] Make After Hooks run even if there is a failing pickle step
 * [ ] Tagged hooks

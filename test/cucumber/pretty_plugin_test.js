@@ -27,15 +27,14 @@ describe('PrettyPlugin', function () {
     new PrettyPlugin(stdout, sourceReader).subscribe(eventEmitter);
 
     scenario = {
-      path: 'features/cukes.feature',
-      location: {line: 4, column: 1},
+      location: {path: 'features/cukes.feature', line: 4, column: 1},
       pickleSteps: [
         {
-          locations: [{line: 6, column: 10}],
+          locations: [{path: 'features/cukes.feature', line: 6, column: 10}],
           text: 'I have 14 cukes'
         },
         {
-          locations: [{line: 7, column: 8}],
+          locations: [{path: 'features/cukes.feature', line: 7, column: 8}],
           text: 'I have fun'
         }
       ]
@@ -44,14 +43,14 @@ describe('PrettyPlugin', function () {
     steps = [
       {
         status: 'unknown',
-        location: {path: 'features/cukes.feature', line: 6, column: 10},
+        gherkinLocation: {path: 'features/cukes.feature', line: 6, column: 10},
         matchedArguments: [
           {offset: 18, value: "42"}
         ]
       },
       {
         status: 'unknown',
-        location: {path: 'features/cukes.feature', line: 7, column: 8},
+        gherkinLocation: {path: 'features/cukes.feature', line: 7, column: 8},
         matchedArguments: [
           {offset: 16, value: "fun"}
         ]

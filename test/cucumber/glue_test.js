@@ -51,7 +51,7 @@ describe("Glue", function () {
       eventEmitter.on('step-finished', function (step) {
         finished = true;
         assert.equal(step.status, 'undefined');
-        assert.deepEqual(step.location, {path: 'features/hello.feature', line: 3, column: 11});
+        assert.deepEqual(step.gherkinLocation, {path: 'features/hello.feature', line: 3, column: 11});
       });
       return testCase.execute(eventEmitter)
         .then(function () {

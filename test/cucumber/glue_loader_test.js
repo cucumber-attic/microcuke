@@ -30,7 +30,7 @@ describe("GlueLoader", function () {
       var glueLoader = new GlueLoader();
       var stubGlue = glueLoader.loadGlue(testDataDir, glueFactory);
       assert.equal(stubGlue.stepDefinitions.length, 1);
-      assert.deepEqual(stubGlue.stepDefinitions[0].location, {
+      assert.deepEqual(stubGlue.stepDefinitions[0].bodyLocation, {
         path: 'test-data/glue/stepdefs.js',
         // The reported line number is mangled if we're running with code coverage on (ISTANBUL is set)
         line: process.env.ISTANBUL ? 9 : 2,
