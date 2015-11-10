@@ -23,10 +23,6 @@
   ],
   "author": "Cucumber Limited <cukes@googlegroups.com>",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/cucumber/microcuke.git"
-  },
   "bin": {
     "cucumber": "./bin/cucumber"
   },
@@ -36,7 +32,9 @@
   "homepage": "https://github.com/cucumber/microcuke#readme",
   "dependencies": {
     "chalk": "^1.1.1",
-    "gherkin": "git+https://github.com/cucumber/gherkin-javascript.git"
+    "gherkin": "git+https://github.com/cucumber/gherkin-javascript.git",
+    "glob": "^5.0.15",
+    "minimist": "^1.2.0"
   },
   "devDependencies": {
     "istanbul": "^0.4.0",
