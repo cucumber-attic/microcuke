@@ -1,8 +1,7 @@
 # Microcuke
 
 [![Join the chat at https://gitter.im/cucumber/gherkin3](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/cucumber/microcuke?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-[![Build Status](https://travis-ci.org/cucumber/microcuke.png)](https://travis-ci.org/cucumber/microcuke)
+[![Build Status](https://travis-ci.org/cucumber/microcuke.svg)](https://travis-ci.org/cucumber/microcuke)
 
 Microcuke is a tiny Cucumber implementation in 500 SLOC, based on
 [Gherkin3](https://github.com/cucumber/gherkin3). It's got 100% unit test coverage.
