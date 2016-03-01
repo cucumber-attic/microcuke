@@ -10,34 +10,26 @@ describe("TestStep", function () {
       });
 
       var eventEmitter = new EventEmitter();
-      var step;
       eventEmitter.on('step-started', function (_step) {
-        step = _step;
+        assert.equal(_step.status, 'unknown');
       });
 
       var world = {};
       testStep.execute(world, eventEmitter, true);
-      assert.equal(step.status, 'unknown');
     });
 
-    it("fires an event with status=failed when returning a rejected promise", function () {
+    it("fires an event with status=failed when a test does not pass", function () {
       var locations = [];
       var testStep = new TestStep(locations, [], function () {
-        return Promise.reject(Error("sad trombone"));
+        throw Error("sad trombone");
       });
 
       var eventEmitter = new EventEmitter();
-      var step;
       eventEmitter.on('step-finished', function (_step) {
-        step = _step;
+        assert.equal(_step.status, 'failed')
       });
-
       var world = {};
-      return testStep.execute(world, eventEmitter, true)
-        .then(function (run) {
-          assert(!run);
-          assert.equal(step.status, 'failed');
-        });
+      testStep.execute(world, eventEmitter, true);
     });
 
     it("fires an event with status=failed when an exception is thrown", function () {
@@ -47,17 +39,12 @@ describe("TestStep", function () {
       });
 
       var eventEmitter = new EventEmitter();
-      var step;
       eventEmitter.on('step-finished', function (_step) {
-        step = _step;
+        assert.equal(_step.status, 'failed');
       });
 
       var world = {};
-      return testStep.execute(world, eventEmitter, true)
-        .then(function (run) {
-          assert(!run);
-          assert.equal(step.status, 'failed');
-        });
+      return testStep.execute(world, eventEmitter, true);
     });
 
     it("fires an event with status=skipped when the run parameter is false", function () {
@@ -67,56 +54,33 @@ describe("TestStep", function () {
       });
 
       var eventEmitter = new EventEmitter();
-      var step;
       eventEmitter.on('step-finished', function (_step) {
-        step = _step;
+        assert.equal(_step.status, 'skipped');
       });
 
       var world = {};
-      return testStep.execute(world, eventEmitter, false)
-        .then(function (run) {
-          assert(!run);
-          assert.equal(step.status, 'skipped');
-        });
+      return testStep.execute(world, eventEmitter, false);
     });
 
     it("fires an event with status=passed when no exception is thrown", function () {
       var locations = [];
       var testStep = new TestStep(locations, [], function () {
+        var a = 0;
+        return a
       });
 
       var eventEmitter = new EventEmitter();
-      var step;
       eventEmitter.on('step-finished', function (_step) {
-        step = _step;
+        try { assert.equal(_step.status, 'passed'); }
+        catch (err) {
+          console.error(err)
+          console.error('step was:\n')
+          console.error(_step)
+        }
       });
 
       var world = {};
-      return testStep.execute(world, eventEmitter, true)
-        .then(function (run) {
-          assert(run);
-          assert.equal(step.status, 'passed');
-        });
-    });
-
-    it("fires an event with status=passed when returning a resolved promise", function () {
-      var locations = [];
-      var testStep = new TestStep(locations, [], function () {
-        return Promise.resolve();
-      });
-
-      var eventEmitter = new EventEmitter();
-      var step;
-      eventEmitter.on('step-finished', function (_step) {
-        step = _step;
-      });
-
-      var world = {};
-      return testStep.execute(world, eventEmitter, true)
-        .then(function (run) {
-          assert(run);
-          assert.equal(step.status, 'passed');
-        });
+      testStep.execute(world, eventEmitter, true);
     });
 
     it("fires an event with status=undefined when no body exists", function () {
@@ -124,17 +88,13 @@ describe("TestStep", function () {
       var testStep = new TestStep(locations, [], null);
 
       var eventEmitter = new EventEmitter();
-      var step;
       eventEmitter.on('step-finished', function (_step) {
         step = _step;
+        assert.equal(step.status, 'undefined', true);
       });
 
       var world = {};
-      return testStep.execute(world, eventEmitter, true)
-        .then(function (run) {
-          assert(!run);
-          assert.equal(step.status, 'undefined', true);
-        });
+      testStep.execute(world, eventEmitter, true);
     });
 
     it("passes argument values to body function", function () {
@@ -148,10 +108,8 @@ describe("TestStep", function () {
 
       var eventEmitter = new EventEmitter();
       var world = {};
-      return testStep.execute(world, eventEmitter, true)
-        .then(function (run) {
-          assert.equal(arg, 'hello');
-        });
+      testStep.execute(world, eventEmitter, true);
+      assert.equal(arg, 'hello');
     });
   });
 });
