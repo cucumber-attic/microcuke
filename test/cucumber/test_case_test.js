@@ -10,53 +10,51 @@ describe("TestCase", function () {
         path: 'features/test.feature',
         locations: []
       };
-      var testCase = new TestCase(pickle, [
+      var testSteps = [
         {
           execute: function (world, eventEmitter, run) {
-            return Promise.resolve(true);
+            return true;
           }
         },
         {
           execute: function (world, eventEmitter, run) {
             done = true;
-            assert(run);
-            return Promise.resolve(true);
+            assert(run === true);
+            return true;
           }
         }
-      ]);
+      ];
+      var testCase = new TestCase(pickle, testSteps);
 
-      return testCase.execute(new EventEmitter())
-        .then(function () {
-          assert(done);
-        });
+      testCase.execute(new EventEmitter());
+      assert(done === true);
     });
 
-    it("uses the same this object across steps", function () {
+    it("uses the same 'this' object across steps", function () {
       var done = false;
       var pickle = {
         path: 'features/test.feature',
         locations: []
       };
-      var testCase = new TestCase(pickle, [
+      var testSteps = [
         {
           execute: function (world, eventEmitter, run) {
             world.bingo = 'yes';
-            return Promise.resolve(true);
+            return true;
           }
         },
         {
           execute: function (world, eventEmitter, run) {
             done = true;
             assert.equal(world.bingo, 'yes');
-            return Promise.resolve(true);
+            return true;
           }
         }
-      ]);
+      ];
+      var testCase = new TestCase(pickle, testSteps);
 
-      return testCase.execute(new EventEmitter())
-        .then(function () {
-          assert(done);
-        });
+      testCase.execute(new EventEmitter());
+      assert(done === true);
     });
 
     it("tells next step to not run when previous one failed", function () {
@@ -65,25 +63,24 @@ describe("TestCase", function () {
         path: 'features/test.feature',
         locations: []
       };
-      var testCase = new TestCase(pickle, [
+      var testSteps = [
         {
           execute: function (world, eventEmitter, run) {
-            return Promise.resolve(false);
+            return false;
           }
         },
         {
           execute: function (world, eventEmitter, run) {
             done = true;
             assert(!run);
-            return Promise.resolve(false);
+            return false;
           }
         }
-      ]);
+      ];
+      var testCase = new TestCase(pickle, testSteps);
 
-      return testCase.execute(new EventEmitter())
-        .then(function () {
-          assert(done);
-        });
+      testCase.execute(new EventEmitter());
+      assert(done === true);
     });
   });
 });
