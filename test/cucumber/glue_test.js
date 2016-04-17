@@ -20,7 +20,7 @@ describe("Glue", function () {
             return {
               execute: function () {
                 executed = true;
-                return Promise.resolve();
+                return true;
               }
             };
           }
@@ -31,9 +31,8 @@ describe("Glue", function () {
       var testCase = glue.createTestCase(pickle);
 
       assert(!executed);
-      return testCase.execute(new EventEmitter()).then(function () {
-        assert(executed);
-      });
+      testCase.execute(new EventEmitter());
+      assert(executed);
     });
 
     it("creates an undefined step when no stepdefs match", function () {
@@ -53,10 +52,8 @@ describe("Glue", function () {
         assert.equal(step.status, 'undefined');
         assert.deepEqual(step.gherkinLocation, {path: 'features/hello.feature', line: 3, column: 11});
       });
-      return testCase.execute(eventEmitter)
-        .then(function () {
-          assert.ok(finished);
-        });
+      testCase.execute(eventEmitter);
+      assert(finished);
     });
 
     it("throws an exception when two stepdefs match", function () {
@@ -91,7 +88,7 @@ describe("Glue", function () {
             return {
               execute: function () {
                 result.push('step');
-                return Promise.resolve();
+                return true;
               }
             };
           }
@@ -104,8 +101,8 @@ describe("Glue", function () {
           createTestStep: function (pickle) {
             return {
               execute: function () {
-                result.push('before')
-                return Promise.resolve();
+                result.push('before');
+                return;
               }
             };
           }
@@ -116,7 +113,7 @@ describe("Glue", function () {
             return {
               execute: function () {
                 result.push('after');
-                return Promise.resolve();
+                return;
               }
             };
           }
@@ -127,9 +124,8 @@ describe("Glue", function () {
       var testCase = glue.createTestCase(pickle);
 
       assert.deepEqual(result, []);
-      return testCase.execute(new EventEmitter()).then(function () {
-        assert.deepEqual(result, ['before', 'step', 'after']);
-      });
+      testCase.execute(new EventEmitter());
+      assert.deepEqual(result, ['before', 'step', 'after']);
     });
   });
 });

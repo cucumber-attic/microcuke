@@ -9,21 +9,17 @@ describe("Runtime", function () {
       var tc1 = {
         execute: function (eventEmitter) {
           order.push(1);
-          return Promise.resolve();
         }
       };
       var tc2 = {
         execute: function (eventEmitter) {
           order.push(2);
-          return Promise.resolve();
         }
       };
 
       var runtime = new SequentialTestCaseExecutor([tc1, tc2]);
-      return runtime.execute(new EventEmitter())
-        .then(function () {
-          assert.deepEqual(order, [1, 2]);
-        });
+      runtime.execute(new EventEmitter())
+      assert.deepEqual(order, [1, 2]);
     });
   });
 });
