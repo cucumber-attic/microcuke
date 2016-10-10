@@ -17,7 +17,7 @@ hard to understand, that's a bug! Feel free to open a bug report.
 
 Most of Microcuke is written in synchronous JavaScript (for readability), but there are
 some parts that are asynchronous (using promises and callbacks). These constructs are
-fairly JavaScript-specific, so if you are using microcuke as a guid to write a Cucumber
+fairly JavaScript-specific, so if you are using microcuke as a guide to write a Cucumber
 implementation for a new language, you should probably translate that code to simple synchronous code.
 
 Here is a high level class diagram to give you an idea:
