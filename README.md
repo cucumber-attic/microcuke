@@ -1,7 +1,7 @@
 # Microcuke
 
-[![Join the chat at https://gitter.im/cucumber/microcuke](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/cucumber/microcuke?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Build Status](https://travis-ci.org/cucumber/microcuke.svg)](https://travis-ci.org/cucumber/microcuke)
+[![Join the chat at https://gitter.im/cucumber-attic/microcuke](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/cucumber/microcuke?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/cucumber-attic/microcuke.svg)](https://travis-ci.org/cucumber/microcuke)
 
 Microcuke is a tiny Cucumber implementation in 500 <abbr title="Source Lines Of Code">SLOC</abbr>, 
 based on [Gherkin](https://github.com/cucumber/gherkin). It has 100% unit test coverage.
@@ -22,7 +22,7 @@ implementation for a new language, you should probably translate that code to si
 
 Here is a high level class diagram to give you an idea:
 
-![](https://github.com/cucumber/microcuke/blob/master/docs/classes.png)
+![](https://github.com/cucumber-attic/microcuke/blob/master/docs/classes.png)
 
 ## Try it out
 
